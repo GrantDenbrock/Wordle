@@ -118,23 +118,20 @@ class NewWord:
         # remove words that contain letters that we aren't interested in
         # Remove words containing list characters
         # using loop
-        result = []
-        flag = 1
-        for word in self.words:
-            for idx in self.bad_letters:
-                if idx not in word:
-                    flag = 1
-                else:
-                    flag = 0
-                    break
-            if flag == 1:
-                result.append(word)
-
-        self.words = result
+        self.remove_words_with_letters_we_arent_interested_in()
 
         # remove words that don't contain letters that we are interested in
         # Remove words not containing list characters
         # using loop
+        self.remove_words_that_dont_contain_letters_that_we_are_interested_in()
+
+        self.words = better_check_chars(self.words, self.list_of_correct_letters_in_correct_places)
+
+        self.words = check_for_letters_in_wrong_place(self.words, self.letter_not_positions)
+        print("There are %s possibilities" % len(self.words))
+        print("The list of possible words is: ", self.words)
+
+    def remove_words_that_dont_contain_letters_that_we_are_interested_in(self):
         result = []
         flag = 1
         for word in self.words:
@@ -146,33 +143,18 @@ class NewWord:
                     break
             if flag == 1:
                 result.append(word)
-
         self.words = result
-        # print("There are %s possibilities" % len(self.words))
-        # print("The list of possible words is: ", self.words)
 
-        # we can narrow this down even further by being able to say a letter needs to be in a specific location...
-        # remove words that don't contain letters that we are interested in, in the right place
-        # Remove words not containing list characters in their right location
-        # using loop
-        # print("*****")
-        # print("Now we are going to require that letters be in the right place")
-        # print("*****")
-        # we want to filter out words based on the fact whether or not they have the matching letter in the right place...
-
-        # this will at the end return a list of words
-        # we will give it a list of letters we already know are in the right place
-        # we will feed it our current list of narrowed down words
-        # it will look at the dictionary word for word and pick out words that have the right letters in the right places.
-
-        self.words = better_check_chars(self.words, self.list_of_correct_letters_in_correct_places)
-        # print("There are %s possibilities" % len(self.words))
-        # print("The list of possible words is: ", self.words)
-        #
-        # print("*****")
-        # print("Now we are going to require that letters not in the wrong place")
-        # print("*****")
-
-        self.words = check_for_letters_in_wrong_place(self.words, self.letter_not_positions)
-        print("There are %s possibilities" % len(self.words))
-        print("The list of possible words is: ", self.words)
+    def remove_words_with_letters_we_arent_interested_in(self):
+        result = []
+        flag = 1
+        for word in self.words:
+            for idx in self.bad_letters:
+                if idx not in word:
+                    flag = 1
+                else:
+                    flag = 0
+                    break
+            if flag == 1:
+                result.append(word)
+        self.words = result

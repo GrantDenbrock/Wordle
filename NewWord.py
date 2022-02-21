@@ -1,7 +1,4 @@
-import numpy as np
-import os
-import re
-
+# This is the dictionary that exists in your machine (if you are on macOS)
 filename = "/usr/share/dict/words"
 
 
@@ -102,8 +99,6 @@ class NewWord:
             self.yellow_letter_list_of_lists.append(self.yellow_letter_list)
             yes_no = input("Is there another yellow letter to add? Enter Y for yes, or N for no.")
 
-
-
     def find_right_letters_in_right_position(self):
         wordle_list = split(self.wordle)
         user_guess_list = split(self.user_guess)
@@ -130,6 +125,7 @@ class NewWord:
         self.words = check_for_letters_in_wrong_place(self.words, self.letter_not_positions)
         print("There are %s possibilities" % len(self.words))
         print("The list of possible words is: ", self.words)
+        return self.words
 
     def remove_words_that_dont_contain_letters_that_we_are_interested_in(self):
         result = []
